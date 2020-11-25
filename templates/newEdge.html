@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+
+  <body>
+    <h3> <a href = "{{ url_for('show_all') }}">Home Page</a> </h3>
+    <h3> Edge Information </h3>
+    <hr />
+
+    {%- for category, message in get_flashed_messages(with_categories = true) %}
+    <div class="alert alert-danger">
+      {{ message }}
+    </div>
+    {%- endfor %}
+
+    <form action="{{ request.path }}" method="post">
+
+      <label for="from">Type : </label><br />
+      <select id="type" name="type" >
+        <option value="weighted" selected> Weighted Edge</option> 
+        <option value="normal">Normal Edge</option>
+      </select> <br/>
+      
+      <label for="from">From :</label><br />
+      <select name="from">
+        <option disabled selected value> -- select an option -- </option>
+        {% for node in nodes %}
+        <option value="{{node.node_id}}">{{node.name}}</option>
+        {% endfor %}
+      </select>
+      <br />
+      <label for="to">To : </label><br />
+      <select name="to">
+        <option disabled selected value> -- select an option -- </option>
+        {% for node in nodes %}
+        <option value="{{node.node_id}}">{{node.name}}</option>
+        {% endfor %}
+      </select> <br /> <br />
+      <label id="lweight" for="weight">Weight : </label> <br />
+      <input id="iweight" type="text" name="weight" placeholder="weight"/><br />
+      <br />
+      <input type="submit" value="Submit" />
+    </form>
+  </body>
+</html>

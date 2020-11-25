@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang = "en">
+   <head>
+      <style>
+         .column {
+         float: left;
+         width: 50%;
+         }
+
+   /* Clear floats after the columns */
+   .row:after {
+   content: "";
+   display: table;
+   clear: both;
+      }
+
+      </style>
+   </head>
+   <body>
+      <h3>
+      <a href = "{{ url_for('show_all') }}">Home Page</a>
+      </h3>
+      
+      <hr/>
+      {%- for message in get_flashed_messages() %}
+         {{ message }}
+      {%- endfor %}
+
+   <div class="row">
+
+      <div class="column">
+      <h3><a href = "{{ url_for('newNode') }}">Add New Node</a></h3> 
+      <br>   
+      <table border ="2">
+         <tr><th colspan="4" >Nodes</th></tr>
+         <tr>
+               <th>ID</th>
+               <th>Name</th>
+               <th>Color</th>
+            </th>
+         </tr>
+             {% for node in Nodes %}
+               <tr>
+                  <td>{{ node.node_id }}</td>
+                  <td>{{ node.name }}</td>
+                  <td>{{ node.color }}</td>
+               </tr>
+            {% endfor %}
+      </table>
+
+      <br />  <br />
+      <a href = "{{ url_for('DrawGraph') }}">Generate the graph</a>
+      </div>
+
+      <div class="column">  
+      <h3><a href = "{{ url_for('newEdge') }}">Add New Edge</a></h3>
+      </br>    
+      <table border ="2">
+            <tr><th colspan="4" >Edges</th></tr>
+            <tr>
+                  <th>ID</th>
+                  <th>From</th>
+                  <th>To</th>
+                  <th>weight</th>
+               </th>
+            </tr>
+                {% for edge in Edges %}
+                  <tr>
+                     <td>{{ edge.edge_id }}</td>
+                     <td>{{ edge.node_above.name }}</td>
+                     <td>{{ edge.node_below.name }}</td>
+                     <td>{{ edge.weight }}</td>
+                  </tr>
+               {% endfor %}
+      </table>
+      </div>    
+
+   </div>
+    </body>
+ 
+</html>
